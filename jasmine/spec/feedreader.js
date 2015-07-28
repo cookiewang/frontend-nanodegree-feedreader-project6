@@ -90,9 +90,8 @@ $(function() {
             loadFeed(0, done);
         });
 
-        it('there is at least .entry element within the .feed container', function(done) {
+        it('there is at least .entry element within the .feed container', function() {
             expect($( "div.feed" ).find( "article.entry").length).not.toBe(0);
-            done();
         });
     });
 
@@ -105,28 +104,20 @@ $(function() {
          var title1 = null;
          var title2 = null;
          //--- use loadFeed callback function to call loadFeed twice.
-         loadFeed(0, function() { //callback
-             title1 = $('.header-title').text();
-             loadFeed(1, function() { //callback
-                 title2 = $('.header-title').text();
-             });
-         });
 
          beforeEach(function(done) {
              loadFeed(0, function() { //callback
                  title1 = $('.header-title').text();
                  loadFeed(1, function() { //callback
                      title2 = $('.header-title').text();
+                     done();
                  });
              });
-             done();
+
          });
 
-         it('ensures when a new feed is loaded by the loadFeed function that the content actually changes', function(done) {
-             console.log("title1 : " + title1);
-             console.log("title2 : " + title2);
+         it('ensures when a new feed is loaded by the loadFeed function that the content actually changes', function() {
              expect(title1 != title2).toBe(true);
-             done();
          });
      });
 
